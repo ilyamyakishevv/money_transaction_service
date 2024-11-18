@@ -3,8 +3,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from configs.config import app_settings
-from configs.loggers import logger
-from routers import v1_router  # Импортируйте роутеры вашего сервиса
+from api.routers.router import router  as v1_router
 
 def create_app() -> FastAPI:
     app = FastAPI(

@@ -1,0 +1,10 @@
+fastapi 
+alembic
+SQLAlchemy 
+pydantic
+asyncpg 
+ruff 
+fastapi-filter 
+pydantic-settings 
+python-json-logger 
+uvicorn 
