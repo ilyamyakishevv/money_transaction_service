@@ -9,8 +9,8 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title=app_settings.AUTH_SERVICE_NAME,
         version=app_settings.AUTH_SERVICE_VERSION,
-        docs_url=f"/docs",
-        openapi_url=f"/openapi.json"
+        docs_url=f"/docs/",
+        openapi_url=f"/openapi.json/"
     )
 
     app.add_middleware(

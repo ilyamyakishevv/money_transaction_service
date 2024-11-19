@@ -19,8 +19,7 @@ COPY . /app
 
 WORKDIR /app/src
 
-EXPOSE 8001
 
 EXPOSE 8002
 
-CMD ["sh", "-c", "python auth_service/main.py && python transaction_service/main.py"]
+CMD ["python", "transaction_service/main.py"]
