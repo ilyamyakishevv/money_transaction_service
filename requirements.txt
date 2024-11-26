@@ -8,3 +8,4 @@ fastapi-filter
 pydantic-settings 
 python-json-logger 
 uvicorn 
+psycopg2-binary
