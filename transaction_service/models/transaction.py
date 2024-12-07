@@ -14,7 +14,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from transaction_service.constants.transaction import TransactionStatus
 from auth_service.models.user import User
-from models.base import Base
+from common.models.base import Base
 
 if TYPE_CHECKING:
     from auth_service.models.user import User
@@ -22,6 +22,7 @@ if TYPE_CHECKING:
 
 class Transaction(Base):
     __tablename__ = "transaction"
+    __table_args__ = {'extend_existing': True}
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     amount: Mapped[float] = mapped_column(Float, nullable=False)

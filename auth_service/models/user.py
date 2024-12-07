@@ -11,7 +11,7 @@ from sqlalchemy import Integer, Float, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models.base import Base
+from common.models.base import Base
 
 if TYPE_CHECKING:
     from transaction_service.models.transaction import Transaction
@@ -19,6 +19,7 @@ if TYPE_CHECKING:
 
 class User(Base):
     __tablename__ = "user"
+    __table_args__ = {'extend_existing': True}
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     uid: Mapped[uuid.UUID] = mapped_column(

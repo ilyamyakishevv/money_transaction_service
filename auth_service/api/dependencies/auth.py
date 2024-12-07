@@ -1,17 +1,12 @@
-import logging
-from datetime import datetime, UTC
-from typing import Optional
 from uuid import UUID
 
 from fastapi import Depends, HTTPException, Security, status
 from fastapi_jwt import JwtAuthorizationCredentials
-from jose import JWTError
 from pydantic import ValidationError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from crud.user.user import crud_user
 from crud import user_auth as crud_user_auth
-from databases.database import get_async_session
+from common.databases.database import get_async_session
 from models.user import User
 from schemas.token import TokenPayload
 from security.token import access_security
@@ -28,7 +23,7 @@ async def get_current_user(
         )
     try:
         token_user = TokenPayload(**credentials.subject)
-    except (JWTError, ValidationError) as ex:
+    except (Exception) as ex:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",

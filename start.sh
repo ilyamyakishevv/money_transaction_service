@@ -3,7 +3,7 @@
 export ENVIRONMENT=local
 export PYTHONDONTWRITEBYTECODE=1
 template_env=.env.template
-main_env=src/.env
+main_env=.env
 
 if [[ ! -e ${main_env} ]]
 then
@@ -11,6 +11,6 @@ then
 fi
 
 docker compose -f docker/docker-compose.yml up --build 
-alembic -c src/alembic.ini upgrade head && alembic -c src/alembic.ini stamp head
+alembic -c alembic.ini upgrade head && alembic -c alembic.ini stamp head
 docker compose -f docker/docker-compose.yml down
 exit

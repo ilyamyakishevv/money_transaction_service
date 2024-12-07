@@ -4,7 +4,10 @@ SQLAlchemy
 pydantic
 asyncpg 
 ruff 
-fastapi-filter 
+fastapi-filter
+fastapi_jwt 
+authlib
+python-jose
 pydantic-settings 
 python-json-logger 
 uvicorn 
