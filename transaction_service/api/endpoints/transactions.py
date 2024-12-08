@@ -9,8 +9,10 @@ from fastapi import (
     APIRouter,
     Depends,
 )
+from fastapi_filter import FilterDepends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from api.filters.filters import TransactionFilter
 from configs.loggers import logger
 from auth_service.api.dependencies.auth import get_current_user
 from auth_service.crud.user import crud_user
@@ -41,10 +43,11 @@ async def get_recieved_transactions(
 
 @router.get("/all_transactions/", response_model=List[TransactionResponse])
 async def get_all_transactions(
+    filters: TransactionFilter = FilterDepends(TransactionFilter),
     db: AsyncSession = Depends(get_async_db),
     current_user: User = Depends(get_current_user),
 ):
-    return await crud_transaction.get_all(db)
+    return await crud_transaction.get_all(db=db, filters=filters)
 
 
 @router.post("/make_transaction/{receiver_id}/")

@@ -3,7 +3,7 @@ from typing import Optional, Type, List
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-
+from api.filters.filters import AsyncFilter
 from constants.crud_types import ModelType
 from crud.async_crud import BaseAsyncCRUD
 
@@ -42,8 +42,11 @@ class CRUDTransaction(
     async def get_all(
         self,
         db: AsyncSession,
+        filters: Optional[AsyncFilter] = None
     ) -> Optional[List[Transaction]]:
         statement = select(self.model)
+        if filters:
+            statement = await filters.filter(statement)
         result = await db.execute(statement)
         return result.unique().scalars().all()
 
