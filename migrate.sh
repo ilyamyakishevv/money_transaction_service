@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-alembic -c src/alembic.ini upgrade head
+python3 -m alembic -c alembic.ini upgrade head

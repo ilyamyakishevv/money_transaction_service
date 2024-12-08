@@ -34,13 +34,13 @@ services:
   postgres:
     image: postgres:12.16-alpine3.18
     container_name: postgres
-    restart: unless-stopped
+    restart: always
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
       POSTGRES_DB: main_db
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:

@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
-from configs.config import db_settings
+from common.configs.config import db_settings
 
 SQLALCHEMY_DATABASE_URL = (
     "postgresql+asyncpg://"
@@ -17,15 +17,17 @@ SQLALCHEMY_DATABASE_URL = (
     f"{db_settings.POSTGRES_DB}"
 )
 
-async_engine = create_async_engine(
-        url=SQLALCHEMY_DATABASE_URL,
-        pool_size=70,
-        max_overflow=10,
-        echo=False,
-        pool_timeout=30,
-        pool_recycle=300,
 
+async_engine = create_async_engine(
+    url=SQLALCHEMY_DATABASE_URL,
+    pool_size=20,
+    max_overflow=10,
+    echo=False,
+    pool_timeout=30,
+    pool_recycle=300,
+    pool_pre_ping=True,
 )
+
 async_session = async_sessionmaker(
     async_engine,
     class_=AsyncSession,

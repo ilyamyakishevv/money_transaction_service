@@ -4,6 +4,7 @@ from .base import BaseSetting
 
 BASE_DIR = Path(__file__).parent.parent
 
+
 class AppSettings(BaseSetting):
     BASE_DIR: Path = BASE_DIR
     ENVIRONMENT: str = "local"

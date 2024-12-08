@@ -14,15 +14,15 @@ class CustomJsonFormatter(jsonlogger.JsonFormatter):
             log_record, record, message_dict
         )
         log_record["level"] = record.levelname
-        log_record["service-name"] = app_settings.SERVICE_NAME
+        log_record["service-name"] = app_settings.AUTH_SERVICE_NAME
         log_record["timestamp"] = datetime.now()
-        log_record["version"] = app_settings.SERVICE_VERSION
-        log_record["api-version"] = app_settings.API_VERSION
+        log_record["version"] = app_settings.AUTH_SERVICE_VERSION
+        log_record["api-version"] = app_settings.AUTH_API_VERSION
 
 
 class LogConfig(BaseModel):
-    LOGGER_NAME: str = app_settings.SERVICE_NAME
-    LOG_FORMAT: str = "%(level)s | %(asctime)s | %(message)s | %(filename)s | %(lineno)s | %(funcName)20s"  # noqa: E501
+    LOGGER_NAME: str = app_settings.AUTH_SERVICE_NAME
+    LOG_FORMAT: str = "%(level)s | %(asctime)s | %(message)s "  # noqa: E501
     LOG_LEVEL: str = log_settings.LOG_LEVEL
 
     # Logging config
@@ -59,4 +59,4 @@ class LogConfig(BaseModel):
 
 dictConfig(LogConfig().model_dump())
 
-logger = logging.getLogger(app_settings.SERVICE_NAME)
+logger = logging.getLogger(app_settings.AUTH_SERVICE_NAME)

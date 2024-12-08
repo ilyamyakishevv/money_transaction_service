@@ -27,7 +27,6 @@ class UserCreate(PasswordBase, UserBase):
 
 class UserCreateDB(UserBase):
     uid: UUID
-    username: str
     hashed_password: str
 
     class Config:

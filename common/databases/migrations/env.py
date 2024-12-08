@@ -5,8 +5,8 @@ import os
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 
-from configs.config import db_settings
-from models.base import Base
+from common.configs.config import db_settings
+from common.models.base import Base
 from auth_service.models.user import *
 from transaction_service.models.transaction import *
 
