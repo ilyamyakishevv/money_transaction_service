@@ -10,9 +10,7 @@ from common.models.base import Base
 from auth_service.models.user import *
 from transaction_service.models.transaction import *
 
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
-)
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 
 config = context.config
 

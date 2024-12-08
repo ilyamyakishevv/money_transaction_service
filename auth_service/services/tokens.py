@@ -19,6 +19,7 @@ ResponseT = TypeVar("ResponseT", bound=Response)
 class TokenSubject(TypedDict):
     uid: Union[UUID, str]
 
+
 async def create_tokens(subject: TokenSubject) -> TokenAccessRefresh:
     access_token = await create_access_token(subject)
     refresh_token = await create_refresh_token(subject)
@@ -36,10 +37,9 @@ async def create_access_token(subject: TokenSubject) -> str:
 async def create_refresh_token(subject: TokenSubject) -> str:
     return refresh_security.create_refresh_token(
         subject=subject,
-        expires_delta=timedelta(
-            minutes=jwt_settings.JWT_REFRESH_TOKEN_EXPIRES
-        ),
+        expires_delta=timedelta(minutes=jwt_settings.JWT_REFRESH_TOKEN_EXPIRES),
     )
+
 
 async def set_tokens_to_cookie(
     response: ResponseT, tokens: TokenAccessRefresh

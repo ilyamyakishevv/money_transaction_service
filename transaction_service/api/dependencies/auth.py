@@ -19,7 +19,6 @@ from auth_service.schemas.token import TokenPayload
 from auth_service.security.token import access_security
 
 
-
 async def get_current_user(
     credentials: JwtAuthorizationCredentials = Security(access_security),
     db: AsyncSession = Depends(get_async_session),
@@ -30,7 +29,7 @@ async def get_current_user(
         )
     try:
         token_user = TokenPayload(**credentials.subject)
-    except (Exception) as ex:
+    except Exception as ex:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
@@ -39,7 +38,8 @@ async def get_current_user(
 
 
 async def get_user(
-    db: AsyncSession, user_uid: UUID,
+    db: AsyncSession,
+    user_uid: UUID,
 ) -> User:
     user = await get_by_uid(db, uid=user_uid)
 

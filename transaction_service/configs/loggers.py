@@ -10,9 +10,7 @@ from configs.config import app_settings, log_settings
 
 class CustomJsonFormatter(jsonlogger.JsonFormatter):
     def add_fields(self, log_record, record, message_dict):
-        super(CustomJsonFormatter, self).add_fields(
-            log_record, record, message_dict
-        )
+        super(CustomJsonFormatter, self).add_fields(log_record, record, message_dict)
         log_record["level"] = record.levelname
         log_record["service-name"] = app_settings.TRANSACTION_SERVICE_NAME
         log_record["timestamp"] = datetime.now()

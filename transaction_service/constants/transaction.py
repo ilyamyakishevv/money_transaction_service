@@ -2,6 +2,6 @@ import enum
 
 
 class TransactionStatus(enum.Enum):
-    PENDING = "pending"
-    APPROVED = "approved"
-    REJECTED = "rejected"
+    pending = "pending"
+    approved = "approved"
+    rejected = "rejected"

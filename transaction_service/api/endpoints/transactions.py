@@ -1,6 +1,6 @@
-import uuid
 import sys
 import os
+from typing import List
 
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
@@ -8,37 +8,63 @@ sys.path.insert(
 from fastapi import (
     APIRouter,
     Depends,
-    HTTPException,
-    status,
 )
 from sqlalchemy.ext.asyncio import AsyncSession
-from starlette.responses import JSONResponse
 
 from configs.loggers import logger
-from api.dependencies.auth import get_current_user
-from auth_service.models.user import User
+from auth_service.api.dependencies.auth import get_current_user
+from auth_service.crud.user import crud_user
+from common.models import User
 from api.dependencies.database import get_async_db
 from crud.transaction import crud_transaction
-from models.transaction import Transaction
-from schemas.transaction import TransactionResponse, TransactionCreate
-
+from schemas.transaction import TransactionResponse
+from services.transaction import send_money_transaction
 
 router = APIRouter()
 
-@router.get("/sended_transactions/", response_model=TransactionResponse)
+
+@router.get("/sended_transactions/", response_model=List[TransactionResponse])
 async def get_sended_transactions(
     db: AsyncSession = Depends(get_async_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
-    return await crud_transaction.get_by_sender_id(
-        db=db, sender_id=current_user.id
-    )
+    return await crud_transaction.get_by_sender_id(db=db, sender_id=current_user.id)
+
 
 @router.get("/recieved_transactions/", response_model=TransactionResponse)
 async def get_recieved_transactions(
     db: AsyncSession = Depends(get_async_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
-    return await crud_transaction.get_by_reciver_id(
-        db=db, reciever_id=current_user.id
+    return await crud_transaction.get_by_reciver_id(db=db, reciever_id=current_user.id)
+
+
+@router.get("/all_transactions/", response_model=List[TransactionResponse])
+async def get_all_transactions(
+    db: AsyncSession = Depends(get_async_db),
+    current_user: User = Depends(get_current_user),
+):
+    return await crud_transaction.get_all(db)
+
+
+@router.post("/make_transaction/{receiver_id}/")
+async def make_transaction(
+    receiver_id: int,
+    amount: float,
+    db: AsyncSession = Depends(get_async_db),
+    current_user: User = Depends(get_current_user),
+):
+    sender = await crud_user.get_by_id(db=db, obj_id=current_user.id)
+    receiver = await crud_user.get_by_id(db=db, obj_id=receiver_id)
+
+    return await send_money_transaction(
+        db=db,
+        sender=sender,
+        receiver=receiver,
+        amount=amount,
     )
+
+
+@router.get("/transaction/{id}/", response_model=TransactionResponse)
+async def get_transaction_by_id(id: int, db: AsyncSession = Depends(get_async_db)):
+    return await crud_transaction.get_by_id(db=db, obj_id=id)

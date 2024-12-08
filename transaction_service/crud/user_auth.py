@@ -11,8 +11,10 @@ sys.path.insert(
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+
 async def get_by_uid(db: AsyncSession, *, uid: UUID):
-    from auth_service.models.user import User 
+    from auth_service.models.user import User
+
     statement = select(User).where(
         User.uid == uid,
     )

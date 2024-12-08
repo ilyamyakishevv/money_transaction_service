@@ -9,6 +9,9 @@ from constants.transaction import TransactionStatus
 class TransactionBase(BaseModel):
     amount: float
 
+    class Config:
+        from_attributes = True
+
 
 class TransactionCreate(TransactionBase):
     sender_id: int
@@ -16,18 +19,20 @@ class TransactionCreate(TransactionBase):
 
 
 class TransactionCreateDB(TransactionCreate):
-    id: int
-    uid: UUID
-    transaction_date: datetime
-    status: TransactionStatus = Field(default=TransactionStatus.PENDING)
+    status: str
 
 
 class TransactionResponse(TransactionBase):
     id: int
+    uid: UUID
     sender_id: int
-    reciever_id: int
-    status: TransactionStatus
+    receiver_id: int
+    status: str
     transaction_date: datetime
 
-class TransactionUpdateDB(TransactionBase): 
+    class Config:
+        from_attributes = True
+
+
+class TransactionUpdateDB(TransactionBase):
     pass

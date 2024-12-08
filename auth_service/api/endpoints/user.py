@@ -25,9 +25,11 @@ from services.tokens import create_tokens, set_tokens_to_cookie
 router = APIRouter()
 
 
-@router.post("/register/",
-            response_model=UserProfileResponse, 
-            status_code=status.HTTP_201_CREATED,)
+@router.post(
+    "/register/",
+    response_model=UserProfileResponse,
+    status_code=status.HTTP_201_CREATED,
+)
 async def create_user(
     create_data: UserCreate,
     db: AsyncSession = Depends(get_async_db),
@@ -47,16 +49,15 @@ async def create_user(
         create_schema=UserCreateDB(
             **create_data_dict,
             uid=str(uuid.uuid4()),
-            hashed_password=hashed_password,         
-        )
+            hashed_password=hashed_password,
+        ),
     )
     logger.info(f"User with email {create_data.email} registred successfully!")
     return new_user
 
+
 @router.post("/login/", response_model=TokenAccessRefresh)
-async def login(
-    user_login: UserLogin, db: AsyncSession = Depends(get_async_db)
-):
+async def login(user_login: UserLogin, db: AsyncSession = Depends(get_async_db)):
     found_user = await crud_user.get_by_email(db, email=user_login.email)
     if not found_user:
         raise HTTPException(
@@ -79,14 +80,14 @@ async def login(
     logger.info(f"User with email {found_user.email} login successfully!")
     return await set_tokens_to_cookie(response=response, tokens=tokens)
 
+
 @router.get("/profile/", response_model=UserProfileResponse)
 async def get_profile(
     db: AsyncSession = Depends(get_async_db),
     current_user: User = Depends(get_current_user),
 ):
-    return await crud_user.get_by_uid(
-        db=db, uid=current_user.uid
-    )
+    return await crud_user.get_by_uid(db=db, uid=current_user.uid)
+
 
 @router.get("/user/{id}/", response_model=UserProfileResponse)
 async def get_profile(
@@ -95,5 +96,6 @@ async def get_profile(
     current_user: User = Depends(get_current_user),
 ):
     return await crud_user.get_by_id(
-        db=db, obj_id=id,
-    )   
+        db=db,
+        obj_id=id,
+    )

@@ -11,6 +11,6 @@ then
 fi
 
 docker compose -f docker/docker-compose.yml up --build 
-# alembic -c alembic.ini upgrade head && alembic -c alembic.ini stamp head
+alembic -c alembic.ini upgrade head && alembic -c alembic.ini stamp head
 docker compose -f docker/docker-compose.yml down
 exit

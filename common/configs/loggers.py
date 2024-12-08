@@ -10,9 +10,7 @@ from configs.config import app_settings, log_settings
 
 class CustomJsonFormatter(jsonlogger.JsonFormatter):
     def add_fields(self, log_record, record, message_dict):
-        super(CustomJsonFormatter, self).add_fields(
-            log_record, record, message_dict
-        )
+        super(CustomJsonFormatter, self).add_fields(log_record, record, message_dict)
         log_record["level"] = record.levelname
         log_record["service-name"] = app_settings.SERVICE_NAME
         log_record["timestamp"] = datetime.now()
@@ -22,7 +20,9 @@ class CustomJsonFormatter(jsonlogger.JsonFormatter):
 
 class LogConfig(BaseModel):
     LOGGER_NAME: str = app_settings.SERVICE_NAME
-    LOG_FORMAT: str = "%(level)s | %(asctime)s | %(message)s | %(filename)s | %(lineno)s | %(funcName)20s"  # noqa: E501
+    LOG_FORMAT: str = (
+        "%(level)s | %(asctime)s | %(message)s | %(filename)s | %(lineno)s | %(funcName)20s"  # noqa: E501
+    )
     LOG_LEVEL: str = log_settings.LOG_LEVEL
 
     # Logging config

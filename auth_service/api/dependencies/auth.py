@@ -6,10 +6,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from crud.user_auth import get_by_uid
 from common.databases.database import get_async_session
-from models.user import User
-from schemas.token import TokenPayload
-from security.token import access_security
-
+from common.models import User
+from common.schemas.token import TokenPayload
+from common.security.token import access_security
 
 
 async def get_current_user(
@@ -22,7 +21,7 @@ async def get_current_user(
         )
     try:
         token_user = TokenPayload(**credentials.subject)
-    except (Exception) as ex:
+    except Exception as ex:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
@@ -31,7 +30,8 @@ async def get_current_user(
 
 
 async def get_user(
-    db: AsyncSession, user_uid: UUID,
+    db: AsyncSession,
+    user_uid: UUID,
 ) -> User:
     user = await get_by_uid(db, uid=user_uid)
 

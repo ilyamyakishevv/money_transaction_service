@@ -4,6 +4,7 @@ from .base import BaseSetting
 
 BASE_DIR = Path(__file__).parent.parent
 
+
 class AppSettings(BaseSetting):
     BASE_DIR: Path = BASE_DIR
     ENVIRONMENT: str = "local"
@@ -53,10 +54,7 @@ class AppSettings(BaseSetting):
 
     @property
     def front_url(self) -> str:
-        return (
-            f"{self.EXTERNAL_SERVICE_SCHEMA}://"
-            f"{self.EXTERNAL_SERVICE_HOST}"
-        )
+        return f"{self.EXTERNAL_SERVICE_SCHEMA}://" f"{self.EXTERNAL_SERVICE_HOST}"
 
 
 class DBSettings(BaseSetting):
@@ -80,7 +78,7 @@ class DBSettings(BaseSetting):
 class JWTSettings(BaseSetting):
     JWT_SECRET_KEY: str
     JWT_ALGORITHM: str = "HS256"
-    JWT_ACCESS_TOKEN_EXPIRES: int 
+    JWT_ACCESS_TOKEN_EXPIRES: int
     JWT_REFRESH_TOKEN_EXPIRES: int
 
 
@@ -91,7 +89,6 @@ class LogSettings(BaseSetting):
 
 class PasswordSettings(BaseSetting):
     PASSWORD_SCORE_MIN: int = 1
-
 
 
 app_settings = AppSettings()

@@ -3,9 +3,7 @@ import uuid
 import sys
 import os
 
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
-)
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 
 from sqlalchemy import Integer, Float, String
 from sqlalchemy.dialects.postgresql import UUID
@@ -19,7 +17,7 @@ if TYPE_CHECKING:
 
 class User(Base):
     __tablename__ = "user"
-    __table_args__ = {'extend_existing': True}
+    __table_args__ = {"extend_existing": True}
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     uid: Mapped[uuid.UUID] = mapped_column(
@@ -29,9 +27,7 @@ class User(Base):
     second_name: Mapped[str]
     email: Mapped[str] = mapped_column(String, unique=True, index=True)
     hashed_password: Mapped[str] = mapped_column(String)
-    balance: Mapped[float] = mapped_column(
-        Float, nullable=False, default=100000.0
-    )
+    balance: Mapped[float] = mapped_column(Float, nullable=False, default=100000.0)
 
     # sended_transactions: Mapped[list["Transaction"]] = relationship(
     #     "Transaction", back_populates="sender"

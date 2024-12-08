@@ -42,7 +42,7 @@ def upgrade() -> None:
         sa.Column(
             "status",
             postgresql.ENUM(
-                "PENDING", "APPROVED", "REJECTED", name="transactionstatus"
+                "pending", "approved", "rejected", name="transactionstatus"
             ),
             nullable=False,
         ),
@@ -55,17 +55,11 @@ def upgrade() -> None:
         ),
         sa.Column("sender_id", sa.Integer(), nullable=True),
         sa.Column("reciver_id", sa.Integer(), nullable=True),
-        sa.ForeignKeyConstraint(
-            ["reciver_id"], ["user.id"], ondelete="CASCADE"
-        ),
-        sa.ForeignKeyConstraint(
-            ["sender_id"], ["user.id"], ondelete="CASCADE"
-        ),
+        sa.ForeignKeyConstraint(["reciver_id"], ["user.id"], ondelete="CASCADE"),
+        sa.ForeignKeyConstraint(["sender_id"], ["user.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
     )
-    op.create_index(
-        op.f("ix_transaction_id"), "transaction", ["id"], unique=False
-    )
+    op.create_index(op.f("ix_transaction_id"), "transaction", ["id"], unique=False)
     op.create_index(
         op.f("ix_transaction_reciver_id"),
         "transaction",
@@ -78,9 +72,7 @@ def upgrade() -> None:
         ["sender_id"],
         unique=False,
     )
-    op.create_index(
-        op.f("ix_transaction_uid"), "transaction", ["uid"], unique=True
-    )
+    op.create_index(op.f("ix_transaction_uid"), "transaction", ["uid"], unique=True)
     # ### end Alembic commands ###
 
 

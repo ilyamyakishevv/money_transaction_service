@@ -1,11 +1,12 @@
-from typing import  Union, Optional, List
+from typing import Union, Optional, List
 from uuid import UUID
 
 
 from pydantic import BaseModel
 from pydantic.class_validators import validator
 
-from schemas.password import PasswordBase
+from common.schemas.password import PasswordBase
+
 
 class UserBase(BaseModel):
     first_name: str
@@ -32,10 +33,12 @@ class UserCreateDB(UserBase):
     class Config:
         from_attributes = True
 
-class UserUpdate(BaseModel): 
+
+class UserUpdate(BaseModel):
     email: Optional[str]
 
-class UserUpdateDB(UserUpdate): 
+
+class UserUpdateDB(UserUpdate):
     pass
 
 
