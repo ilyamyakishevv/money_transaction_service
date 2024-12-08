@@ -22,7 +22,7 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
-    app.include_router(v1_router, prefix=f"/api/{app_settings.TRANSACTION_API_VERSION}")
+    app.include_router(v1_router)
 
     return app
 
