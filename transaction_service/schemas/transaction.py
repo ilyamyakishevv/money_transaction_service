@@ -28,3 +28,6 @@ class TransactionResponse(TransactionBase):
     reciever_id: int
     status: TransactionStatus
     transaction_date: datetime
+
+class TransactionUpdateDB(TransactionBase): 
+    pass

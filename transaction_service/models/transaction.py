@@ -13,7 +13,7 @@ from sqlalchemy.dialects.postgresql import ENUM, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from transaction_service.constants.transaction import TransactionStatus
-from auth_service.models.user import User
+# from auth_service.models.user import User
 from common.models.base import Base
 
 if TYPE_CHECKING:
@@ -38,15 +38,15 @@ class Transaction(Base):
     sender_id: Mapped[Optional[int]] = mapped_column(
         Integer, ForeignKey("user.id", ondelete="CASCADE"), index=True
     )
-    # reciver_id: Mapped[Optional[int]] = mapped_column(
-    #     Integer, ForeignKey("user.id", ondelete="CASCADE"), index=True
-    # )
-    # sender: Mapped[Optional[User]] = relationship(
+    receiver_id: Mapped[Optional[int]] = mapped_column(
+        Integer, index=True
+    )
+    # sender: Mapped["User"] = relationship(
     #     "User", back_populates="sended_transactions"
     # )
-    # reciever: Mapped[Optional[User]]= relationship(
-    #     "User", back_populates="recieved_transactions"
-    # )
+    # # receiver: Mapped["User"] = relationship( 
+    # #     "User", back_populates="received_transactions"  
+    # # )
 
     def __repr__(self) -> str:
         return f"<Transaction: {self.id} >"

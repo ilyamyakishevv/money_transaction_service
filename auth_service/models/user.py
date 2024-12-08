@@ -36,9 +36,9 @@ class User(Base):
     # sended_transactions: Mapped[list["Transaction"]] = relationship(
     #     "Transaction", back_populates="sender"
     # )
-    # recieved_transactions: Mapped[list["Transaction"]] = relationship(
-    #     "Transaction", back_populates="reciever"
-    # )
+    # # received_transactions: Mapped[list["Transaction"]] = relationship(
+    # #     "Transaction", back_populates="receiver"
+    # # )
 
     def __repr__(self) -> str:
         return f"<User: {self.first_name} {self.second_name}>"

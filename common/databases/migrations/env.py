@@ -23,7 +23,7 @@ target_metadata = Base.metadata
 
 
 def get_url() -> str:
-    postgres_server = db_settings.POSTGRES_HOST
+    postgres_server = "127.0.0.1"
     postgres_user = db_settings.POSTGRES_USER
     postgres_password = db_settings.POSTGRES_PASSWORD
     postgres_db = db_settings.POSTGRES_DB

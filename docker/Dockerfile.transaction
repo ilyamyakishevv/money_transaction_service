@@ -5,19 +5,19 @@ RUN apk update && apk add --no-cache \
     gcc g++ musl-dev postgresql-dev libffi-dev build-base
 
 
-WORKDIR /app
+WORKDIR /
 
 
-COPY requirements.txt /app/
+COPY requirements.txt /
 
 
 RUN pip install --no-cache-dir -r requirements.txt
 
 
-COPY . /app
+COPY . /
 
 
-WORKDIR /app/
+WORKDIR /
 
 EXPOSE 8002
 

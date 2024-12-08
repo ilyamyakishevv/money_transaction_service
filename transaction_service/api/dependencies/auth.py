@@ -1,14 +1,22 @@
 from uuid import UUID
 
+
+import sys
+import os
+
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../../"))
+)
+
 from fastapi import Depends, HTTPException, Security, status
 from fastapi_jwt import JwtAuthorizationCredentials
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from crud.user_auth import get_by_uid
 from common.databases.database import get_async_session
-from models.user import User
-from schemas.token import TokenPayload
-from security.token import access_security
+from auth_service.models.user import User
+from auth_service.schemas.token import TokenPayload
+from auth_service.security.token import access_security
 
 
 
