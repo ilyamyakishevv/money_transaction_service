@@ -32,15 +32,28 @@ async def get_sended_transactions(
     db: AsyncSession = Depends(get_async_db),
     current_user: User = Depends(get_current_user),
 ):
-    return await crud_transaction.get_by_sender_id(db=db, sender_id=current_user.id)
+    found_transaction = await crud_transaction.get_by_sender_id(db=db, sender_id=current_user.id)
+    if not found_transaction: 
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User with id {current_user.id} haven't sended transactions!",
+        )
+    return found_transaction
 
 
-@router.get("/recieved_transactions/", response_model=TransactionResponse)
-async def get_recieved_transactions(
+@router.get("/received_transactions/", response_model=List[TransactionResponse])
+async def get_received_transactions(
     db: AsyncSession = Depends(get_async_db),
     current_user: User = Depends(get_current_user),
-):
-    return await crud_transaction.get_by_reciver_id(db=db, reciever_id=current_user.id)
+):   
+    found_transaction = await crud_transaction.get_by_receiver_id(db=db, receiver_id=current_user.id)
+    if not found_transaction: 
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User with id {current_user.id} haven't received transactions!",
+        )
+    return found_transaction
+
 
 
 @router.get("/all_transactions/", response_model=List[TransactionResponse])
@@ -78,4 +91,10 @@ async def make_transaction(
 
 @router.get("/transaction/{id}/", response_model=TransactionResponse)
 async def get_transaction_by_id(id: int, db: AsyncSession = Depends(get_async_db)):
-    return await crud_transaction.get_by_id(db=db, obj_id=id)
+    found_transaction = await crud_transaction.get_by_id(db=db, obj_id=id)
+    if not found_transaction: 
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Transaction with id {id} not found!",
+        )
+    return found_transaction

@@ -19,13 +19,13 @@ class CRUDTransaction(
     def __init__(self, model: Type[ModelType]) -> None:
         super().__init__(model)
 
-    async def get_by_reciver_id(
+    async def get_by_receiver_id(
         self,
         db: AsyncSession,
         *,
-        reciever_id: int,
+        receiver_id: int,
     ) -> Optional[List[Transaction]]:
-        statement = select(self.model).where(self.model.receiver_id == reciever_id)
+        statement = select(self.model).where(self.model.receiver_id == receiver_id)
         result = await db.execute(statement)
         return result.scalars().unique().all()
 
