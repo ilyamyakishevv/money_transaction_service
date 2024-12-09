@@ -8,6 +8,8 @@ sys.path.insert(
 from fastapi import (
     APIRouter,
     Depends,
+    HTTPException,
+    status,
 )
 from fastapi_filter import FilterDepends
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -59,6 +61,11 @@ async def make_transaction(
 ):
     sender = await crud_user.get_by_id(db=db, obj_id=current_user.id)
     receiver = await crud_user.get_by_id(db=db, obj_id=receiver_id)
+    if not receiver: 
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User with id {receiver_id} not found.",
+        )
 
     return await send_money_transaction(
         db=db,

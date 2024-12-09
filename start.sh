@@ -10,6 +10,6 @@ then
     cp "${template_env}"  "${main_env}"
 fi
 
-docker compose -f docker/docker-compose.yml up --build 
+docker compose -f docker/docker-compose.yml up --build
 docker compose -f docker/docker-compose.yml down
 exit
