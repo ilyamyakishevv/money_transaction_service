@@ -1,5 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
+
 from configs.loggers import logger
 from common.models import User
 from models.transaction import Transaction
@@ -24,10 +25,6 @@ async def send_money_transaction(
             ),
         )
         await db.commit()
-        if not receiver:
-            logger.info("Receive user does not exist!")
-            raise ValueError("Receive user does not exist!")
-
         if sender.balance < amount:
             new_transaction.status = "rejected"
             await db.commit()
