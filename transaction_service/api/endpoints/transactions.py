@@ -48,7 +48,8 @@ async def get_all_transactions(
     filters: TransactionFilter = FilterDepends(TransactionFilter),
     db: AsyncSession = Depends(get_async_db),
     current_user: User = Depends(get_current_user),
-):
+):  
+    logger.info(f"User with ID {current_user.id} just seen transactions list!")
     return await crud_transaction.get_all(db=db, filters=filters)
 
 
