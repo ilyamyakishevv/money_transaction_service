@@ -18,7 +18,7 @@ class CRUDUser(BaseAsyncCRUD[User, UserCreateDB, UserUpdateDB]):
         super().__init__(model)
 
     async def get_by_email(self, db: AsyncSession, *, email: str) -> Optional[User]:
-        statement = select(self.model).where(self.model.email == email)
+        statement = select(self.model).where(self.model.email == email.lower())
         result = await db.execute(statement)
         return result.scalars().first()
 

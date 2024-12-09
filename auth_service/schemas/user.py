@@ -16,11 +16,6 @@ class UserBase(BaseModel):
     class Config:
         from_attributes = True
 
-    # @validator("email")
-    # def email_check(cls, v: Union[EmailStrLower, str]) -> str:
-    #     email_info = validate_email(v, check_deliverability=True)
-    #     return email_info.normalized
-
 
 class UserCreate(PasswordBase, UserBase):
     pass

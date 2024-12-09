@@ -34,15 +34,16 @@ async def create_user(
     create_data: UserCreate,
     db: AsyncSession = Depends(get_async_db),
 ):
-    user = await crud_user.get_by_email(db=db, email=create_data.email)
+    user = await crud_user.get_by_email(db=db, email=create_data.email.lower())
     if user:
         logger.info(f"User with email {create_data.email} is already registred!")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Email {create_data.email} is already "
+            detail=f"Email {create_data.email.lower()} is already "
             "associated with an account.",
         )
     create_data_dict = create_data.model_dump(exclude_unset=True)
+    create_data_dict["email"]= create_data_dict["email"].lower()
     hashed_password = await hash_password(create_data_dict.pop("password"))
     new_user = await crud_user.create(
         db=db,
@@ -52,7 +53,7 @@ async def create_user(
             hashed_password=hashed_password,
         ),
     )
-    logger.info(f"User with email {create_data.email} registred successfully!")
+    logger.info(f"User with email {create_data.email.lower()} registred successfully!")
     return new_user
 
 
