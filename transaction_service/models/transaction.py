@@ -36,12 +36,7 @@ class Transaction(Base):
         Integer, ForeignKey("user.id", ondelete="CASCADE"), index=True
     )
     receiver_id: Mapped[Optional[int]] = mapped_column(Integer, index=True)
-    # sender: Mapped["User"] = relationship(
-    #     "User", back_populates="sended_transactions"
-    # )
-    # # receiver: Mapped["User"] = relationship(
-    # #     "User", back_populates="received_transactions"
-    # # )
+    
 
     def __repr__(self) -> str:
         return f"<Transaction: {self.id} >"

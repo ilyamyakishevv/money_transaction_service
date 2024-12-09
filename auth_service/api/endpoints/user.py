@@ -95,7 +95,13 @@ async def get_profile(
     db: AsyncSession = Depends(get_async_db),
     current_user: User = Depends(get_current_user),
 ):
-    return await crud_user.get_by_id(
+    found_user = await  crud_user.get_by_id(
         db=db,
         obj_id=id,
     )
+    if not found_user: 
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User with id {id} not found.",
+        )
+    return found_user

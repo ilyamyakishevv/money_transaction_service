@@ -29,12 +29,6 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(String)
     balance: Mapped[float] = mapped_column(Float, nullable=False, default=100000.0)
 
-    # sended_transactions: Mapped[list["Transaction"]] = relationship(
-    #     "Transaction", back_populates="sender"
-    # )
-    # # received_transactions: Mapped[list["Transaction"]] = relationship(
-    # #     "Transaction", back_populates="receiver"
-    # # )
 
     def __repr__(self) -> str:
         return f"<User: {self.first_name} {self.second_name}>"
