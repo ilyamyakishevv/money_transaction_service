@@ -23,8 +23,8 @@
 Также показать умение использовать логирование
 
 ## Стэк Python:
-- Fast-api
-- SqlAlchemy
+- FastAPI
+- SQLAlchemy
 - Alembic
 - PostgreSql
 - Docker
